@@ -12,13 +12,20 @@ public class AnimationTestScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			anim.SetBool ("Dance",true);
+		}
+		if (Input.GetKeyDown(KeyCode.W)) {
+			anim.SetBool ("Dance",false);
+		}
 		if (Input.GetKeyDown(KeyCode.A)) {
-			if (anim.GetBool ("Cry")) {
-				anim.SetBool ("Cry", false);
-			}
-			else if (anim.GetBool ("Cry") == false) {
-				anim.SetBool ("Cry", true);
-			}
+			anim.SetTrigger ("Normal");
+		}
+		else if (Input.GetKeyDown(KeyCode.S)) {
+			anim.SetTrigger ("Happy");
+		}
+		else if (Input.GetKeyDown(KeyCode.D)) {
+			anim.SetTrigger ("Cry");
 		}
 		
 	}
