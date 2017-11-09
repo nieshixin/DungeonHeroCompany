@@ -46,4 +46,11 @@ public class ProfileViewerManager : MonoBehaviour {
 		bg.SetActive (true);
 		Debug.Log ("panel open");
 	}
+
+
+	public void UnviewProfile(){
+		UnBlur ();
+		bg.SetActive (false);
+		Debug.Log ("panel closed");
+	}
 }
