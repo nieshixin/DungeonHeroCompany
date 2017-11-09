@@ -1,9 +1,0 @@
-{
-	"Version": 3,
-	"FileReferences": {
-		"Moc": "miku_sample.moc3",
-		"Textures": [
-			"miku_sample.2048/texture_00.png"
-		]
-	}
-}
