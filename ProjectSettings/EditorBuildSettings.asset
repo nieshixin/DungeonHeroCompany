@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/DungeonHeroCompany/PlaymapMockup.unity
+    guid: 1edd948c1b7c8164aa3783ecd8bb2756
