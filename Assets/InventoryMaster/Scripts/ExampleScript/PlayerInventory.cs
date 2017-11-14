@@ -286,6 +286,7 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		/*
         if (Input.GetKeyDown(inputManagerDatabase.CharacterSystemKeyCode))
         {
             if (!characterSystem.activeSelf)
@@ -299,6 +300,7 @@ public class PlayerInventory : MonoBehaviour
                 characterSystemInventory.closeInventory();
             }
         }
+        */
 
         if (Input.GetKeyDown(inputManagerDatabase.InventoryKeyCode))
         {
@@ -314,6 +316,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
+		/*
         if (Input.GetKeyDown(inputManagerDatabase.CraftSystemKeyCode))
         {
             if (!craftSystem.activeSelf)
@@ -327,6 +330,7 @@ public class PlayerInventory : MonoBehaviour
                 craftSystemInventory.closeInventory();
             }
         }
+        */
 
     }
 

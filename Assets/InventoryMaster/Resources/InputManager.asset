@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: InputManager
   m_EditorClassIdentifier: 
   UFPS: 1
-  reloadWeapon: 114
-  throwGrenade: 103
-  SplitItem: 305
+  reloadWeapon: 0
+  throwGrenade: 0
+  SplitItem: 0
   InventoryKeyCode: 105
-  StorageKeyCode: 101
-  CharacterSystemKeyCode: 99
-  CraftSystemKeyCode: 107
+  StorageKeyCode: 0
+  CharacterSystemKeyCode: 0
+  CraftSystemKeyCode: 0

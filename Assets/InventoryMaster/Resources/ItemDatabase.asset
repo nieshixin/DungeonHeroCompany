@@ -289,9 +289,7 @@ MonoBehaviour:
       attributeValue: 20
   - itemName: Bread
     itemID: 16
-    itemDesc: 'Take some meat to it and you will get a nice hamburger.
-
-      + 10 Health'
+    itemDesc: I'm just testing things out, yeah
     itemIcon: {fileID: 21300000, guid: 0288dbaa9a46b7a4fa8f0b0b773b6024, type: 3}
     itemModel: {fileID: 100000, guid: 40da790cc27843b45b9c255c8d996b43, type: 2}
     itemValue: 1

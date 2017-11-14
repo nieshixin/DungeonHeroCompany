@@ -604,6 +604,7 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
 
             else
             {
+				/*
                 GameObject dropItem = (GameObject)Instantiate(GetComponent<ItemOnObject>().item.itemModel);
                 dropItem.AddComponent<PickUpItem>();
                 dropItem.GetComponent<PickUpItem>().item = this.gameObject.GetComponent<ItemOnObject>().item;               
@@ -612,8 +613,13 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
                 if (oldSlot.transform.parent.parent.GetComponent<EquipmentSystem>() != null)
                     inventory.GetComponent<Inventory>().UnEquipItem1(dropItem.GetComponent<PickUpItem>().item);
                 Destroy(this.gameObject);
+*/
 
+				this.gameObject.transform.SetParent(oldSlot.transform);
+				this.transform.localPosition = Vector3.zero;
+				Debug.Log ("Do not drop test");
             }
+		
         }
         inventory.OnUpdateItemList();
     }
