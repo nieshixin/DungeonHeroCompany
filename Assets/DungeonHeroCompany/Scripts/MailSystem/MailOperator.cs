@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MailOperator : MonoBehaviour {//singleton
 	//this script gets data from mailManager, then instantiate mails and attach the data to the mail
@@ -22,7 +23,7 @@ public class MailOperator : MonoBehaviour {//singleton
 	private GameObject parentToSpawn;
 	void Start () {
 		parentToSpawn = GameObject.FindGameObjectWithTag ("MailList");
-		
+
 	}
 	
 	// Update is called once per frame
@@ -35,8 +36,18 @@ public class MailOperator : MonoBehaviour {//singleton
 		GameObject go =  Instantiate(mailPrefab, parentToSpawn.transform) as GameObject;
 		//add data
 		go.GetComponent<MailData> ().heroData = data;
+		/*
 		//update position
-		go.transform.localPosition = new Vector3 (10f, -1 * transform.childCount * 25, 0);
+		if (transform.childCount == 0) {
+			go.transform.localPosition = new Vector3 (5f, -5f, 0);
+		} else {
+			//get the width and height of the mail prefab
+
+			go.transform.localPosition = new Vector3 (5f, -1 * transform.childCount * 35 - 5, 0);
+
+		}
+		//Debug.Log (go.transform.localPosition);
+		*/
 	}
 
 

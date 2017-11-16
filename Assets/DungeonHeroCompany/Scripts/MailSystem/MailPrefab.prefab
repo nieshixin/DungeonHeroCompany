@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114690984846058762}
   - component: {fileID: 95253610222047296}
   - component: {fileID: 114800990605727260}
+  - component: {fileID: 114581966154684192}
   m_Layer: 5
   m_Name: MailPrefab
   m_TagString: Untagged
@@ -65,6 +66,25 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114581966154684192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508779613075612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 106.22
+  m_PreferredHeight: 31.880005
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114690984846058762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,4 +268,4 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 106.22, y: 31.880005}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
