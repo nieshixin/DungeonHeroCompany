@@ -5,8 +5,8 @@ using UnityEngine;
 public class ProfileViewerManager : MonoBehaviour {
 
 	private static ProfileViewerManager theInstance;
-	[SerializeField]
-	GameObject blurMask; 
+	//[SerializeField]
+	//GameObject blurMask; 
 	[SerializeField]
 	GameObject bg; //backgroud page
 	public static ProfileViewerManager instance {
@@ -24,7 +24,7 @@ public class ProfileViewerManager : MonoBehaviour {
 	void Start () {
 		theInstance = this; 
 
-		blurMask = transform.Find ("Blur").gameObject;
+		//blurMask = transform.Find ("Blur").gameObject;
 		bg = transform.Find ("Backgroud").gameObject;
 			
 	}
@@ -35,21 +35,21 @@ public class ProfileViewerManager : MonoBehaviour {
 	}
 
 	void Blur(){
-		blurMask.SetActive (true);
+		//blurMask.SetActive (true);
 	}
 	void UnBlur(){
-		blurMask.SetActive (false);
+		//blurMask.SetActive (false);
 	}
 
 	public void ViewProfile(){
-		Blur ();
+		//Blur ();
 		bg.SetActive (true);
 		Debug.Log ("panel open");
 	}
 
 
 	public void UnviewProfile(){
-		UnBlur ();
+		//UnBlur ();
 		bg.SetActive (false);
 		Debug.Log ("panel closed");
 	}
