@@ -49,7 +49,7 @@ public class ProfileViewerManager : MonoBehaviour {
 
 
 	public void UnviewProfile(){
-		//UnBlur ();
+		//DUnBlur ();
 		bg.SetActive (false);
 		Debug.Log ("panel closed");
 	}

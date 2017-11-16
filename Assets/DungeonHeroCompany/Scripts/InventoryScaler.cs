@@ -16,7 +16,7 @@ public class InventoryScaler : MonoBehaviour {
 		
 	}
 
-	public void UpgradeInventorySlots(){
+	public void UpgradeInventorySlots(){// upgrade slots by adding 1 row
 		Inventory mi = GameObject.FindGameObjectWithTag ("MainInventory").GetComponent<Inventory> ();
 		mi.height += 1;
 		mi.updateSlotAmount ();

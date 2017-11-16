@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class  MailButtonBehavior: MonoBehaviour {
 
-
 	// Use this for initialization
 	void Start () {
 		
@@ -18,16 +17,13 @@ public class  MailButtonBehavior: MonoBehaviour {
 	}
 
 	public void MailOnclick(){//put all functions you wanna call when click on Mail Icon here, in ORDER
-		OpenProfilePanel ();
 		//HideMailButton ();
 		
 	}
 
 	void HideMailButton(){
 		//gameObject.SetActive (false);
-	}
 
-	void OpenProfilePanel(){
-		ProfileViewerManager.instance.ViewProfile ();
 	}
+		
 }
