@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Match3Controller : MonoBehaviour {  
+	public Match3Controller instance;
+
 	public Gemstone gemstone;  
 	public int rowNum=7;//宝石列数  
 	public int columNum=10;//宝石行数  
@@ -12,14 +14,22 @@ public class Match3Controller : MonoBehaviour {
 	public AudioClip match3Clip;  
 	public AudioClip swapClip;  
 	public AudioClip erroeClip;  
-	// Use this for initialization  
+	// Use this for initialization 
+	[SerializeField]
+	private bool mouseDown = false; //true when mouse holding down, 
+
 	void Start () {  
+		instance = this;
+
 		gemstoneList = new ArrayList ();//新建列表  
 		matchesGemstone = new ArrayList ();  
+
 		for (int rowIndex=0; rowIndex<rowNum; rowIndex++) {  
+			
 			ArrayList temp=new ArrayList();  
+
 			for(int columIndex=0;columIndex<columNum;columIndex++){  
-				Gemstone c=AddGemstone(rowIndex,columIndex);  
+				Gemstone c = AddGemstone(rowIndex,columIndex);  
 				temp.Add(c);  
 
 			}  
@@ -27,8 +37,8 @@ public class Match3Controller : MonoBehaviour {
 		}  
 		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {//开始检测匹配消除  
 			RemoveMatches();  
-		}  
-	}  
+		}
+	}
 	public Gemstone AddGemstone(int rowIndex,int columIndex){//生成宝石  
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
@@ -42,13 +52,14 @@ public class Match3Controller : MonoBehaviour {
 		
 	}  
 	public void Select(Gemstone c){  
+		Debug.Log ("x: " + c.rowIndex + ", y: " + c.columIndex);
 		//Destroy (c.gameObject);  
 		if (currentGemstone == null) {  
 			currentGemstone = c;  
 			currentGemstone.isSelected=true;  
 			return;  
 		} else {  
-			if(Mathf.Abs(currentGemstone.rowIndex-c.rowIndex)+Mathf.Abs(currentGemstone.columIndex-c.columIndex)==1){  
+			if(Mathf.Abs(currentGemstone.rowIndex-c.rowIndex)+Mathf.Abs(currentGemstone.columIndex-c.columIndex)==1){  //check neighbour tiles
 				//ExangeAndMatches(currentGemstone,c);  
 				StartCoroutine(ExangeAndMatches(currentGemstone,c));  
 			}else{  
@@ -60,7 +71,7 @@ public class Match3Controller : MonoBehaviour {
 	}  
 	IEnumerator ExangeAndMatches(Gemstone c1,Gemstone c2){//实现宝石交换并且检测匹配消除  
 		Exchange(c1,c2);  
-		yield return new WaitForSeconds (0.5f);  
+		yield return new WaitForSeconds (0.2f);  
 		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {  
 			RemoveMatches ();  
 		} else {  
