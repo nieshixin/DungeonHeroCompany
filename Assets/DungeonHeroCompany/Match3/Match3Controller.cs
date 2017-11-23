@@ -17,7 +17,7 @@ public class Match3Controller : MonoBehaviour {
 	// Use this for initialization 
 	[SerializeField]
 	private bool mouseDown = false; //true when mouse holding down, 
-
+	private Gemstone exchangeBack;
 	void Start () {  
 		instance = this;
 
@@ -52,14 +52,16 @@ public class Match3Controller : MonoBehaviour {
 		
 	}  
 	public void Select(Gemstone c){  
-		Debug.Log ("x: " + c.rowIndex + ", y: " + c.columIndex);
+		//iTween.MoveTo (c.gameObject, iTween.Hash ());
+		//Debug.Log ("x: " + c.rowIndex + ", y: " + c.columIndex);
 		//Destroy (c.gameObject);  
 		if (currentGemstone == null) {  
 			currentGemstone = c;  
 			currentGemstone.isSelected=true;  
 			return;  
-		} else {  
-			if(Mathf.Abs(currentGemstone.rowIndex-c.rowIndex)+Mathf.Abs(currentGemstone.columIndex-c.columIndex)==1){  //check neighbour tiles
+		}
+		else {  
+			if(Mathf.Abs(currentGemstone.rowIndex-c.rowIndex) == 0 || Mathf.Abs(currentGemstone.columIndex-c.columIndex) == 0){  //check neighbour tiles
 				//ExangeAndMatches(currentGemstone,c);  
 				StartCoroutine(ExangeAndMatches(currentGemstone,c));  
 			}else{  
@@ -67,15 +69,22 @@ public class Match3Controller : MonoBehaviour {
 			}  
 			currentGemstone.isSelected=false;  
 			currentGemstone=null;  
-		}  
-	}  
-	IEnumerator ExangeAndMatches(Gemstone c1,Gemstone c2){//实现宝石交换并且检测匹配消除  
-		Exchange(c1,c2);  
+		}
+
+	}
+
+	IEnumerator ExangeAndMatches(Gemstone c1,Gemstone c2){//确定位置正确，开始check是否种type匹配
+		int c1_row_before = c1.rowIndex;
+		int c1_colum_before = c1.columIndex;
+		int c2_row_before = c2.rowIndex;
+		int c2_colum_before = c2.columIndex;
+
+		Exchange2(c1,c2);  
 		yield return new WaitForSeconds (0.2f);  
-		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {  
+		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {  //if matches, start matching
 			RemoveMatches ();  
-		} else {  
-			Exchange(c1,c2);  
+		} else {  //if doesn't match, exchange back
+			Exchange2(c1,exchangeBack);  
 		}  
 	}  
 	bool CheckHorizontalMatches(){//实现检测水平方向的匹配  
@@ -176,4 +185,71 @@ public class Match3Controller : MonoBehaviour {
 		c1.TweenToPosition (c1.rowIndex, c1.columIndex);  
 		c2.TweenToPosition (c2.rowIndex, c2.columIndex);  
 	}  
+
+	public void Exchange2 (Gemstone c1,Gemstone c2){//实现宝石交换位置  , c1: original, c2: destination
+
+		int originalRow = c1.rowIndex;
+		int originalColum = c1.columIndex;
+		int destRow = c2.rowIndex;
+		int destColum = c2.columIndex;
+		this.gameObject.GetComponent<AudioSource> ().PlayOneShot (swapClip);  
+
+		if (c1.rowIndex == c2.rowIndex ) {//when they are on the same ROW, we are modifying and comparing the columns
+			
+			int tempGemNum = Mathf.Abs (c1.columIndex - c2.columIndex);
+			if ((c1.columIndex - c2.columIndex) < 0) {  //if the original gem is moving upward, affected gems move downwards
+
+				for (int i = 0; i < tempGemNum; i++) { //except the original c1, all affected gems move 1 down 
+					Gemstone temp = GetGemstone (c1.rowIndex, c1.columIndex + 1 + i); //because the original one is at below, 向上遍历
+					SetGemstone (temp.rowIndex, temp.columIndex - 1, temp);
+					temp.columIndex -= 1;
+					//finally the visual tween move
+					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
+				}
+			} else {// when the original gem is moving downwards, affected gems move upwards
+
+				for (int i = 0; i < tempGemNum; i++) { //except the original c1, all affected gems move 1 down 
+					Gemstone temp = GetGemstone (c1.rowIndex, c1.columIndex - 1 - i); //同理，向下遍历
+					SetGemstone (temp.rowIndex, temp.columIndex + 1, temp);
+					temp.columIndex += 1;
+					//finally the visual tween move
+					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
+				}
+			}
+		}
+			if (c1.columIndex == c2.columIndex ) {//when they are on the same COLUM, we are modifying and comparing the rows
+
+				int tempGemNum2 = Mathf.Abs (c1.rowIndex - c2.rowIndex);
+				if ((c1.rowIndex - c2.rowIndex) < 0) {  //if the original gem is moving upward, affected gems move downwards
+				
+					for (int i = 0; i < tempGemNum2; i++) { //except the original c1, all affected gems move 1 down 
+						Gemstone temp = GetGemstone (c1.rowIndex + 1 + i, c1.columIndex); //because the original one is at below, 向上遍历
+						SetGemstone (temp.rowIndex - 1, temp.columIndex, temp);
+						temp.rowIndex -= 1;
+					//finally the visual tween move
+					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
+					}
+				} else {// when the original gem is moving downwards, affected gems move upwards
+
+					for (int i = 0; i < tempGemNum2; i++) { //except the original c1, all affected gems move 1 down 
+						Gemstone temp = GetGemstone (c1.rowIndex - 1 - i, c1.columIndex); //同理，向下遍历
+						SetGemstone (temp.rowIndex + 1, temp.columIndex, temp);
+						temp.rowIndex += 1;
+					//finally the visual tween move
+					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
+					}
+				}
+
+			}
+
+		SetGemstone (destRow, destColum, c1); 
+		c1.rowIndex = destRow;
+		c1.columIndex = destColum;
+		//finally the visual tween move
+		c1.TweenToPosition (c1.rowIndex, c1.columIndex);
+
+		exchangeBack = GetGemstone (originalRow,originalColum);
+		//	c1.TweenToPosition (c1.rowIndex, c1.columIndex);  
+		//c2.TweenToPosition (c2.rowIndex, c2.columIndex);  
+	}
 }

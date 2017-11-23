@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xOffset: -4.5
-  yOffset: -2
+  yOffset: -2.5
   rowIndex: 0
   columIndex: 0
   gemstoneBgs:

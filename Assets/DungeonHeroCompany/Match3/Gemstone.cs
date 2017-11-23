@@ -51,8 +51,16 @@ public class Gemstone : MonoBehaviour {
 		gemstoneBg.transform.parent = this.transform;  
 	}  
 	public void OnMouseDown(){  
+
 		Match3Controller.Select (this);  
 	}  
+
+	/*
+	public void OnMouseUp(){
+		Debug.Log (this.rowIndex + " ," + this.columIndex);
+		Match3Controller.MatchCheck (this);
+	}
+	*/
 	public void Dispose(){  
 		Destroy (this.gameObject);  
 		Destroy (gemstoneBg.gameObject);  
