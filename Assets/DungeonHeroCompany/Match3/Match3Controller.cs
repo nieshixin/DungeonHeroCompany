@@ -14,10 +14,10 @@ public class Match3Controller : MonoBehaviour {
 	public AudioClip match3Clip;  
 	public AudioClip swapClip;  
 	public AudioClip erroeClip;  
-	// Use this for initialization 
-	[SerializeField]
-	private bool mouseDown = false; //true when mouse holding down, 
+	AudioSource audi;
+
 	private Gemstone exchangeBack;
+
 	void Start () {  
 		instance = this;
 
@@ -38,6 +38,8 @@ public class Match3Controller : MonoBehaviour {
 		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {//开始检测匹配消除  
 			RemoveMatches();  
 		}
+
+		 audi = this.gameObject.GetComponent<AudioSource> ();  
 	}
 	public Gemstone AddGemstone(int rowIndex,int columIndex){//生成宝石  
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
@@ -192,7 +194,8 @@ public class Match3Controller : MonoBehaviour {
 		int originalColum = c1.columIndex;
 		int destRow = c2.rowIndex;
 		int destColum = c2.columIndex;
-		this.gameObject.GetComponent<AudioSource> ().PlayOneShot (swapClip);  
+
+
 
 		if (c1.rowIndex == c2.rowIndex ) {//when they are on the same ROW, we are modifying and comparing the columns
 			
@@ -206,6 +209,8 @@ public class Match3Controller : MonoBehaviour {
 					//finally the visual tween move
 					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
 				}
+				//play sound effect
+				StartCoroutine(playClip(swapClip, tempGemNum));
 			} else {// when the original gem is moving downwards, affected gems move upwards
 
 				for (int i = 0; i < tempGemNum; i++) { //except the original c1, all affected gems move 1 down 
@@ -215,6 +220,8 @@ public class Match3Controller : MonoBehaviour {
 					//finally the visual tween move
 					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
 				}
+				//play sound effect
+				StartCoroutine(playClip(swapClip, tempGemNum));
 			}
 		}
 			if (c1.columIndex == c2.columIndex ) {//when they are on the same COLUM, we are modifying and comparing the rows
@@ -228,7 +235,12 @@ public class Match3Controller : MonoBehaviour {
 						temp.rowIndex -= 1;
 					//finally the visual tween move
 					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
+
+
 					}
+				//play sound effect
+				StartCoroutine(playClip(swapClip, tempGemNum2));
+
 				} else {// when the original gem is moving downwards, affected gems move upwards
 
 					for (int i = 0; i < tempGemNum2; i++) { //except the original c1, all affected gems move 1 down 
@@ -237,9 +249,12 @@ public class Match3Controller : MonoBehaviour {
 						temp.rowIndex += 1;
 					//finally the visual tween move
 					temp.TweenToPosition (temp.rowIndex, temp.columIndex);
-					}
-				}
 
+
+					}
+				//play sound effect
+				StartCoroutine(playClip(swapClip, tempGemNum2));
+				}
 			}
 
 		SetGemstone (destRow, destColum, c1); 
@@ -247,9 +262,21 @@ public class Match3Controller : MonoBehaviour {
 		c1.columIndex = destColum;
 		//finally the visual tween move
 		c1.TweenToPosition (c1.rowIndex, c1.columIndex);
+		//play sound effect
+		//audi.PlayOneShot (swapClip);
 
 		exchangeBack = GetGemstone (originalRow,originalColum);
 		//	c1.TweenToPosition (c1.rowIndex, c1.columIndex);  
 		//c2.TweenToPosition (c2.rowIndex, c2.columIndex);  
+	}
+
+	IEnumerator playClip(AudioClip theClip, int repeat){
+		
+		for (int i = 0; i < repeat; i++) {
+			audi.PlayOneShot (theClip);	
+			yield return new WaitForSeconds (0.03f);  
+		}
+	
+
 	}
 }
