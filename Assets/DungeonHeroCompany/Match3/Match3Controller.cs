@@ -53,6 +53,14 @@ public class Match3Controller : MonoBehaviour {
 		return c;  
 	}  
 
+	public Gemstone AddUpgradedGemstone(int rowIndex,int columIndex, int type){//add corresponding upgraded gemstone when match 4+
+		Gemstone c = Instantiate (gemstone)as Gemstone;  
+		c.transform.parent = this.transform;//生成宝石为GameController子物体  
+		c.GetComponent<Gemstone>().RandomCreateGemstoneBg();  
+		c.GetComponent<Gemstone>().UpdatePosition(rowIndex,columIndex);  
+		return c;  
+	}  
+
 	// Update is called once per frame  
 	void Update () {  
 		
@@ -137,11 +145,11 @@ public class Match3Controller : MonoBehaviour {
 	}  
 	void RemoveMatches(){//删除匹配的宝石  
 		//how many match we get?
-		Debug.Log("Match NUM: " + matchesGemstone.Count);
+		//Debug.Log("Match NUM: " + matchesGemstone.Count);
 
 		for (int i=0; i<matchesGemstone.Count; i++) {  
 			Gemstone c=matchesGemstone[i]as Gemstone;  
-			Debug.Log ("TYPE" + c.gemstoneType);
+			//Debug.Log ("TYPE" + c.gemstoneType);
 			RemoveGemstone(c);  
 		}  
 
