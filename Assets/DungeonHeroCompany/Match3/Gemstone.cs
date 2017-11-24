@@ -22,7 +22,8 @@ public class Gemstone : MonoBehaviour {
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;  
 
-
+	private Color spColor;
+	private int targetIndex;
 	public bool isSelected{  
 		set{  
 			if(value){  
@@ -38,7 +39,7 @@ public class Gemstone : MonoBehaviour {
 		Match3Controller = GameObject.Find ("Match3Controller").GetComponent<Match3Controller> ();  
 		spriteRenderer = gemstoneBg.GetComponent<SpriteRenderer> ();  
 
-		//combine special gem spawn list with regular spawn list:
+		//spColor = spriteRenderer.color;
 
 	}  
 
@@ -77,23 +78,32 @@ public class Gemstone : MonoBehaviour {
 
 
 
-	public void CreateUpgradedGemstone(GemstoneType t){//create special gemstone
+	public void CreateUpgradedGemstone(int chain, GemstoneType t){//create special gemstone
 		if (gemstoneBg != null)   
 			return;  
 
 		//loop through the special pool, fide the gemstone contains the right type, return it, and spawn it
+	
+		GameObject compare;
+		//int targetIndex;
 
-		GameObject go = new GameObject ();
-		for (int i = 0; i < upgradedPool_level_2.Count; i++) {
-			if (upgradedPool_level_2 [i].GetComponent<GemType> ().type == t) {
-				go = upgradedPool_level_2 [i];
+		if (chain >= 4) { // check chain so we can spawn different tiers
+			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
+				compare = upgradedPool_level_2[i] as GameObject;
+				if (compare.GetComponent<GemType> ().type == t) {
+					targetIndex = upgradedPool_level_2.IndexOf (compare);
+					break;
+				}
 			}
 		}
-		gemstoneBg = Instantiate (go) as GameObject;  
+		//then check if gemstone is still null
+
+
+		gemstoneBg = Instantiate (upgradedPool_level_2[targetIndex]) as GameObject;  
 
 		gemstoneType = gemstoneBg.GetComponent<GemType> ().type;
 		gemstoneBg.transform.parent = this.transform;  
-	}  
+	} 
 
 
 	public void OnMouseDown(){  
@@ -112,4 +122,14 @@ public class Gemstone : MonoBehaviour {
 		Destroy (gemstoneBg.gameObject);  
 		Match3Controller = null;  
 	}  
+
+	public void OnMouseOver(){
+	//	spColor.a = 255f;
+		//spriteRenderer.color = spColor;
+	}
+
+	public void OnMouseExit(){
+	//	spColor.a = 200f;
+		//spriteRenderer.color = spColor; 
+	}
 }

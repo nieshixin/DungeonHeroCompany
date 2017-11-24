@@ -18,8 +18,13 @@ public class Match3Controller : MonoBehaviour {
 
 	private Gemstone exchangeBack;
 
+	private List<GemstoneType> priorSpawnInfo;
+
 	void Start () {  
 		instance = this;
+
+		priorSpawnInfo = new List<GemstoneType> ();
+
 		gemstoneList = new ArrayList ();//新建列表  
 		matchesGemstone = new ArrayList ();  
 		Initialize ();
@@ -33,7 +38,7 @@ public class Match3Controller : MonoBehaviour {
 			ArrayList temp=new ArrayList();  
 
 			for(int columIndex=0;columIndex<columNum;columIndex++){  
-				Gemstone c = AddGemstone(rowIndex,columIndex);  
+				Gemstone c = AddRegularGemstone(rowIndex,columIndex);  
 				temp.Add(c);  
 
 			}  
@@ -45,7 +50,7 @@ public class Match3Controller : MonoBehaviour {
 	}
 
 
-	public Gemstone AddGemstone(int rowIndex,int columIndex){//生成宝石  
+	public Gemstone AddRegularGemstone(int rowIndex,int columIndex){//生成宝石  
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
 		c.GetComponent<Gemstone>().RandomCreateGemstoneBg();  
@@ -53,10 +58,10 @@ public class Match3Controller : MonoBehaviour {
 		return c;  
 	}  
 
-	public Gemstone AddUpgradedGemstone(int rowIndex,int columIndex, int type){//add corresponding upgraded gemstone when match 4+
+	public Gemstone AddUpgradedGemstone(int rowIndex,int columIndex, int chain, GemstoneType t){//add corresponding upgraded gemstone when match 4+
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
-		c.GetComponent<Gemstone>().RandomCreateGemstoneBg();  
+		c.GetComponent<Gemstone>().CreateUpgradedGemstone(chain, t);  
 		c.GetComponent<Gemstone>().UpdatePosition(rowIndex,columIndex);  
 		return c;  
 	}  
@@ -143,11 +148,20 @@ public class Match3Controller : MonoBehaviour {
 			matchesGemstone.Add(c);  
 		}  
 	}  
-	void RemoveMatches(){//删除匹配的宝石  
+	void RemoveMatches(){//NOTE: HERE can get how many chain the match gets
 		//how many match we get?
 		//Debug.Log("Match NUM: " + matchesGemstone.Count);
 
-		for (int i=0; i<matchesGemstone.Count; i++) {  
+		/////
+		//Modify container!!
+		if (matchesGemstone.Count >= 4) {
+			Debug.Log ("REMOVE MATCHES  " + matchesGemstone.Count);
+			Gemstone sample = matchesGemstone [0] as Gemstone;
+			GemstoneType t = sample.gemstoneType;
+			priorSpawnInfo.Add (t);
+		}
+
+		for (int i=0; i < matchesGemstone.Count; i++) {  
 			Gemstone c=matchesGemstone[i]as Gemstone;  
 			//Debug.Log ("TYPE" + c.gemstoneType);
 			RemoveGemstone(c);  
@@ -165,11 +179,15 @@ public class Match3Controller : MonoBehaviour {
 		}  
 	}  
 
-
+	//very important: this function is: REMOVE+ GENERATE new gemstones
+	//only responsible for individual spawning, should not know anything about the chain number, RemoveMatches() should know the chain number
+	//the prioerSpawnContainer has the highest spawn priority
 	void RemoveGemstone(Gemstone c){//删除宝石  
 		//Debug.Log("删除宝石");  
 		c.Dispose ();  
+		//play sound
 		this.gameObject.GetComponent<AudioSource> ().PlayOneShot (match3Clip);  
+		//all the gemstones fall
 		for (int i=c.rowIndex+1; i<rowNum; i++) {  
 			Gemstone temGemstone=GetGemstone(i,c.columIndex);  
 			temGemstone.rowIndex--;  
@@ -177,7 +195,19 @@ public class Match3Controller : MonoBehaviour {
 			//temGemstone.UpdatePosition(temGemstone.rowIndex,temGemstone.columIndex);  
 			temGemstone.TweenToPosition(temGemstone.rowIndex,temGemstone.columIndex);  
 		}  
-		Gemstone newGemstone = AddGemstone (rowNum, c.columIndex);  
+
+
+		//START SPAWNING
+		Gemstone newGemstone;
+
+		if(priorSpawnInfo.Count != 0){
+			newGemstone = AddUpgradedGemstone (rowNum, c.columIndex, matchesGemstone.Count , priorSpawnInfo[0]);  
+			priorSpawnInfo.RemoveAt (0);
+		}else{
+			newGemstone = AddRegularGemstone (rowNum, c.columIndex);  
+		}
+		
+
 		newGemstone.rowIndex--;  
 		SetGemstone (newGemstone.rowIndex, newGemstone.columIndex, newGemstone);  
 		//newGemstone.UpdatePosition (newGemstone.rowIndex, newGemstone.columIndex);  
