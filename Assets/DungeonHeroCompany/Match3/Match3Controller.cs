@@ -20,12 +20,16 @@ public class Match3Controller : MonoBehaviour {
 
 	void Start () {  
 		instance = this;
-
 		gemstoneList = new ArrayList ();//新建列表  
 		matchesGemstone = new ArrayList ();  
+		Initialize ();
 
+		 audi = this.gameObject.GetComponent<AudioSource> ();  
+	}
+
+	void Initialize(){
 		for (int rowIndex=0; rowIndex<rowNum; rowIndex++) {  
-			
+
 			ArrayList temp=new ArrayList();  
 
 			for(int columIndex=0;columIndex<columNum;columIndex++){  
@@ -38,9 +42,9 @@ public class Match3Controller : MonoBehaviour {
 		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {//开始检测匹配消除  
 			RemoveMatches();  
 		}
-
-		 audi = this.gameObject.GetComponent<AudioSource> ();  
 	}
+
+
 	public Gemstone AddGemstone(int rowIndex,int columIndex){//生成宝石  
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
@@ -89,6 +93,8 @@ public class Match3Controller : MonoBehaviour {
 			Exchange2(c1,exchangeBack);  
 		}  
 	}  
+
+
 	bool CheckHorizontalMatches(){//实现检测水平方向的匹配  
 		bool isMatches = false;  
 		for (int rowIndex=0; rowIndex<rowNum; rowIndex++) {  
@@ -104,6 +110,7 @@ public class Match3Controller : MonoBehaviour {
 		}  
 		return isMatches;  
 	}  
+
 	bool CheckVerticalMatches(){//实现检测垂直方向的匹配  
 		bool isMatches = false;  
 		for (int columIndex=0; columIndex<columNum; columIndex++) {  
@@ -114,11 +121,12 @@ public class Match3Controller : MonoBehaviour {
 					AddMatches(GetGemstone(rowIndex+1,columIndex));  
 					AddMatches(GetGemstone(rowIndex+2,columIndex));  
 					isMatches=true;  
-				}  
+				}
 			}  
 		}  
 		return isMatches;  
 	}  
+
 	void AddMatches(Gemstone c){  
 		if (matchesGemstone == null)  
 			matchesGemstone = new ArrayList ();  
@@ -128,19 +136,28 @@ public class Match3Controller : MonoBehaviour {
 		}  
 	}  
 	void RemoveMatches(){//删除匹配的宝石  
+		//how many match we get?
+		Debug.Log("Match NUM: " + matchesGemstone.Count);
+
 		for (int i=0; i<matchesGemstone.Count; i++) {  
 			Gemstone c=matchesGemstone[i]as Gemstone;  
+			Debug.Log ("TYPE" + c.gemstoneType);
 			RemoveGemstone(c);  
 		}  
+
 		matchesGemstone = new ArrayList ();  
 		StartCoroutine (WaitForCheckMatchesAgain ());  
 	}  
+
+
 	IEnumerator WaitForCheckMatchesAgain(){//连续检测匹配消除  
 		yield return new WaitForSeconds (0.5f);  
 		if (CheckHorizontalMatches () || CheckVerticalMatches ()) {  
 			RemoveMatches();  
 		}  
 	}  
+
+
 	void RemoveGemstone(Gemstone c){//删除宝石  
 		//Debug.Log("删除宝石");  
 		c.Dispose ();  
@@ -158,11 +175,15 @@ public class Match3Controller : MonoBehaviour {
 		//newGemstone.UpdatePosition (newGemstone.rowIndex, newGemstone.columIndex);  
 		newGemstone.TweenToPosition (newGemstone.rowIndex, newGemstone.columIndex);  
 	}  
+
+
 	public Gemstone GetGemstone(int rowIndex,int columIndex){//通过行号和列号，获取对应位置的宝石  
 		ArrayList temp = gemstoneList [rowIndex]as ArrayList;  
 		Gemstone c = temp [columIndex]as Gemstone;  
 		return c;  
 	}  
+
+
 	public void SetGemstone(int rowIndex,int columIndex,Gemstone c){//设置所对应行号和列号的宝石  
 		ArrayList temp = gemstoneList [rowIndex]as ArrayList;  
 		temp [columIndex] = c;  
@@ -187,6 +208,7 @@ public class Match3Controller : MonoBehaviour {
 		c1.TweenToPosition (c1.rowIndex, c1.columIndex);  
 		c2.TweenToPosition (c2.rowIndex, c2.columIndex);  
 	}  
+
 
 	public void Exchange2 (Gemstone c1,Gemstone c2){//实现宝石交换位置  , c1: original, c2: destination
 

@@ -87,5 +87,7 @@ MonoBehaviour:
   - {fileID: 1139953502023498, guid: 30364d30d5532554ea6fe2d5836af3e2, type: 2}
   - {fileID: 1693522446643388, guid: decaffd163814424fb5420d7250f0ee9, type: 2}
   - {fileID: 1693522446643388, guid: 6156a4de76e0e4947939af21fd00f4ff, type: 2}
+  upgradedBgs:
+  - {fileID: 1693522446643388, guid: cf2ecfbecbee99b429ff50e49d89ab73, type: 2}
   gemstoneType: 0
   spriteRenderer: {fileID: 0}

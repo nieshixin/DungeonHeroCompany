@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Gemstone : MonoBehaviour {
 
@@ -9,11 +10,16 @@ public class Gemstone : MonoBehaviour {
 	public int rowIndex = 0;  
 	public int columIndex = 0;  
 	public GameObject[] gemstoneBgs;//宝石数组  
+	public GameObject[] upgradedBgs;// upgraded gems, cannot spawn directly, can only spawn when match 4+
+	public GameObject[] combinedBgs;
+
 	public int gemstoneType;//宝石类型  
 	private GameObject gemstoneBg;  
 	private Match3Controller Match3Controller;  
 	[SerializeField]
 	private SpriteRenderer spriteRenderer;  
+
+
 	public bool isSelected{  
 		set{  
 			if(value){  
@@ -27,6 +33,9 @@ public class Gemstone : MonoBehaviour {
 	void Start () {  
 		Match3Controller = GameObject.Find ("Match3Controller").GetComponent<Match3Controller> ();  
 		spriteRenderer = gemstoneBg.GetComponent<SpriteRenderer> ();  
+
+		//combine special gem spawn list with regular spawn list:
+
 	}  
 
 	// Update is called once per frame  
@@ -43,13 +52,15 @@ public class Gemstone : MonoBehaviour {
 		columIndex = _columIndex;  
 		iTween.MoveTo (this.gameObject, iTween.Hash ("x", columIndex + xOffset, "y", rowIndex + yOffset, "time", 0.5f));  
 	}  
-	public void RandomCreateGemstoneBg(){//随机的宝石类型  
+	public void RandomCreateGemstoneBg(){//随机的宝石类型 , special gems NOT included
 		if (gemstoneBg != null)   
 			return;  
 		gemstoneType = Random.Range (0, gemstoneBgs.Length);  
 		gemstoneBg = Instantiate (gemstoneBgs [gemstoneType])as GameObject;  
 		gemstoneBg.transform.parent = this.transform;  
 	}  
+
+
 	public void OnMouseDown(){  
 
 		Match3Controller.Select (this);  
