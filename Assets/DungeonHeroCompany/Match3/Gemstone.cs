@@ -89,31 +89,10 @@ public class Gemstone : MonoBehaviour {
 	
 		GameObject compare;
 		//int targetIndex;
-		switch(chain){
-		/*
-		case 6:
-			for (int i = 0; i < upgradedPool_level_3.Count; i++) { //in the upgraded gem pool, look for the type given
-				compare = upgradedPool_level_3 [i] as GameObject;
-				if (compare.GetComponent<GemType> ().type == t) {
-					targetIndex = upgradedPool_level_3.IndexOf (compare);
-					break;
-				}
-			}
-			break;
+	
+		// check chain so we can spawn different tiers
+		if(chain >= 4){
 
-
-		case 5:
-			for (int i = 0; i < upgradedPool_level_3.Count; i++) { //in the upgraded gem pool, look for the type given
-				compare = upgradedPool_level_3 [i] as GameObject;
-				if (compare.GetComponent<GemType> ().type == t) {
-					targetIndex = upgradedPool_level_3.IndexOf (compare);
-					break;
-				}
-			}
-			break;
-*/
-		case 4:
-		  // check chain so we can spawn different tiers
 			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
 				compare = upgradedPool_level_2[i] as GameObject;
 				if (compare.GetComponent<GemType> ().type == t) {
@@ -121,29 +100,6 @@ public class Gemstone : MonoBehaviour {
 					break;
 				}
 			}
-			break;
-
-		case 5:
-			// check chain so we can spawn different tiers
-			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
-				compare = upgradedPool_level_2[i] as GameObject;
-				if (compare.GetComponent<GemType> ().type == t) {
-					targetIndex = upgradedPool_level_2.IndexOf (compare);
-					break;
-				}
-			}
-			break;
-		case 6:
-			
-			// check chain so we can spawn different tiers
-			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
-				compare = upgradedPool_level_2[i] as GameObject;
-				if (compare.GetComponent<GemType> ().type == t) {
-					targetIndex = upgradedPool_level_2.IndexOf (compare);
-					break;
-				}
-			}
-			break;
 		}
 
 		//NOTICE!
@@ -184,4 +140,6 @@ public class Gemstone : MonoBehaviour {
 	//	spColor.a = 200f;
 		//spriteRenderer.color = spColor; 
 	}
+
+
 }

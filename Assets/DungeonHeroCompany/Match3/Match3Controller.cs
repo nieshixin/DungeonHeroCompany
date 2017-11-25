@@ -32,6 +32,16 @@ public class Match3Controller : MonoBehaviour {
 		 audi = this.gameObject.GetComponent<AudioSource> ();  
 	}
 
+	void Update(){
+		//test
+		if (Input.GetKeyDown (KeyCode.A)) {
+			GemstoneType t;
+			t = GemstoneType.B;
+
+			DestroyAGemType (t);
+		}
+	}
+		
 	void Initialize(){
 		for (int rowIndex=0; rowIndex<rowNum; rowIndex++) {  
 
@@ -61,16 +71,13 @@ public class Match3Controller : MonoBehaviour {
 	public Gemstone AddUpgradedGemstone(int rowIndex,int columIndex, int chain, GemstoneType t){//add corresponding upgraded gemstone when match 4+
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
-		Debug.Log("AddUpgradedGemstone() received type: " + t.ToString());
+		//Debug.Log("AddUpgradedGemstone() received type: " + t.ToString());
 		c.GetComponent<Gemstone>().CreateUpgradedGemstone(chain, t);  
 		c.GetComponent<Gemstone>().UpdatePosition(rowIndex,columIndex);  
 		return c;  
 	}  
 
-	// Update is called once per frame  
-	void Update () {  
-		
-	}  
+
 	public void Select(Gemstone c){  
 		//iTween.MoveTo (c.gameObject, iTween.Hash ());
 		//Debug.Log ("x: " + c.rowIndex + ", y: " + c.columIndex);
@@ -159,9 +166,9 @@ public class Match3Controller : MonoBehaviour {
 			Debug.Log ("REMOVE MATCHES  " + matchesGemstone.Count);
 			Gemstone sample = matchesGemstone [0] as Gemstone;
 			GemstoneType t = sample.gemstoneType;
-			Debug.Log (t.ToString());
+			//Debug.Log (t.ToString());
 			priorSpawnInfo.Add (t);
-			Debug.Log ("in the list:" + priorSpawnInfo [0].ToString ());
+			//Debug.Log ("in the list:" + priorSpawnInfo [0].ToString ());
 		}
 
 		for (int i=0; i < matchesGemstone.Count; i++) {  
@@ -205,11 +212,11 @@ public class Match3Controller : MonoBehaviour {
 
 		//check the priorSpawninfo, if has anything, spawn upgraded gems first
 		if(priorSpawnInfo.Count != 0){
-			Debug.Log ("has prior spawns  " + priorSpawnInfo.Count);
-			Debug.Log ("the chain is : " + matchesGemstone.Count);
+			//Debug.Log ("has prior spawns  " + priorSpawnInfo.Count);
+			//Debug.Log ("the chain is : " + matchesGemstone.Count);
 			newGemstone = AddUpgradedGemstone (rowNum, c.columIndex, matchesGemstone.Count , priorSpawnInfo[0]);  
 			priorSpawnInfo.RemoveAt (0);
-			Debug.Log ("remove complete "+ priorSpawnInfo.Count);
+			//Debug.Log ("remove complete "+ priorSpawnInfo.Count);
 		}else{
 			newGemstone = AddRegularGemstone (rowNum, c.columIndex);  
 		}
@@ -345,5 +352,17 @@ public class Match3Controller : MonoBehaviour {
 		}
 	
 
+	}
+
+	public void DestroyAGemType(GemstoneType t){
+		for (int i = 0; i < rowNum; i++) {
+			for (int j = 0; j < columNum; j++) {
+				Gemstone gem = GetGemstone (i,j);
+				if(gem.gemstoneType == t)
+				AddMatches (gem);
+			}
+		}
+		Debug.Log (matchesGemstone.Count);
+		RemoveMatches ();
 	}
 }
