@@ -13,6 +13,8 @@ public class Gemstone : MonoBehaviour {
 	public List<GameObject> gemstoneBgs;//regular pool 
 
 	public List<GameObject> upgradedPool_level_2;// upgraded pool, cannot spawn directly, can only spawn when match 4+
+	public List<GameObject> upgradedPool_level_3;
+
 	//public GameObject[] combinedBgs;
 
 	public GemstoneType gemstoneType;//宝石类型  
@@ -79,15 +81,39 @@ public class Gemstone : MonoBehaviour {
 
 
 	public void CreateUpgradedGemstone(int chain, GemstoneType t){//create special gemstone
-		if (gemstoneBg != null)   
+		if (gemstoneBg != null) {
 			return;  
+		}
 
 		//loop through the special pool, fide the gemstone contains the right type, return it, and spawn it
 	
 		GameObject compare;
 		//int targetIndex;
+		switch(chain){
+		/*
+		case 6:
+			for (int i = 0; i < upgradedPool_level_3.Count; i++) { //in the upgraded gem pool, look for the type given
+				compare = upgradedPool_level_3 [i] as GameObject;
+				if (compare.GetComponent<GemType> ().type == t) {
+					targetIndex = upgradedPool_level_3.IndexOf (compare);
+					break;
+				}
+			}
+			break;
 
-		if (chain >= 4) { // check chain so we can spawn different tiers
+
+		case 5:
+			for (int i = 0; i < upgradedPool_level_3.Count; i++) { //in the upgraded gem pool, look for the type given
+				compare = upgradedPool_level_3 [i] as GameObject;
+				if (compare.GetComponent<GemType> ().type == t) {
+					targetIndex = upgradedPool_level_3.IndexOf (compare);
+					break;
+				}
+			}
+			break;
+*/
+		case 4:
+		  // check chain so we can spawn different tiers
 			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
 				compare = upgradedPool_level_2[i] as GameObject;
 				if (compare.GetComponent<GemType> ().type == t) {
@@ -95,8 +121,33 @@ public class Gemstone : MonoBehaviour {
 					break;
 				}
 			}
+			break;
+
+		case 5:
+			// check chain so we can spawn different tiers
+			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
+				compare = upgradedPool_level_2[i] as GameObject;
+				if (compare.GetComponent<GemType> ().type == t) {
+					targetIndex = upgradedPool_level_2.IndexOf (compare);
+					break;
+				}
+			}
+			break;
+		case 6:
+			
+			// check chain so we can spawn different tiers
+			for (int i = 0; i < upgradedPool_level_2.Count; i++) { //in the upgraded gem pool, look for the type given
+				compare = upgradedPool_level_2[i] as GameObject;
+				if (compare.GetComponent<GemType> ().type == t) {
+					targetIndex = upgradedPool_level_2.IndexOf (compare);
+					break;
+				}
+			}
+			break;
 		}
-		//then check if gemstone is still null
+
+		//NOTICE!
+		//if compare is null, targetIndex will result in 0, which will result the spawned gem is always the first one in the list!!!!
 
 
 		gemstoneBg = Instantiate (upgradedPool_level_2[targetIndex]) as GameObject;  
@@ -118,6 +169,7 @@ public class Gemstone : MonoBehaviour {
 	}
 	*/
 	public void Dispose(){  
+		//calculate scores here
 		Destroy (this.gameObject);  
 		Destroy (gemstoneBg.gameObject);  
 		Match3Controller = null;  

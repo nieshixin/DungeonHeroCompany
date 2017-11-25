@@ -17,7 +17,7 @@ public class Match3Controller : MonoBehaviour {
 	AudioSource audi;
 
 	private Gemstone exchangeBack;
-
+	[SerializeField]
 	private List<GemstoneType> priorSpawnInfo;
 
 	void Start () {  
@@ -61,6 +61,7 @@ public class Match3Controller : MonoBehaviour {
 	public Gemstone AddUpgradedGemstone(int rowIndex,int columIndex, int chain, GemstoneType t){//add corresponding upgraded gemstone when match 4+
 		Gemstone c = Instantiate (gemstone)as Gemstone;  
 		c.transform.parent = this.transform;//生成宝石为GameController子物体  
+		Debug.Log("AddUpgradedGemstone() received type: " + t.ToString());
 		c.GetComponent<Gemstone>().CreateUpgradedGemstone(chain, t);  
 		c.GetComponent<Gemstone>().UpdatePosition(rowIndex,columIndex);  
 		return c;  
@@ -158,7 +159,9 @@ public class Match3Controller : MonoBehaviour {
 			Debug.Log ("REMOVE MATCHES  " + matchesGemstone.Count);
 			Gemstone sample = matchesGemstone [0] as Gemstone;
 			GemstoneType t = sample.gemstoneType;
+			Debug.Log (t.ToString());
 			priorSpawnInfo.Add (t);
+			Debug.Log ("in the list:" + priorSpawnInfo [0].ToString ());
 		}
 
 		for (int i=0; i < matchesGemstone.Count; i++) {  
@@ -200,9 +203,13 @@ public class Match3Controller : MonoBehaviour {
 		//START SPAWNING
 		Gemstone newGemstone;
 
+		//check the priorSpawninfo, if has anything, spawn upgraded gems first
 		if(priorSpawnInfo.Count != 0){
+			Debug.Log ("has prior spawns  " + priorSpawnInfo.Count);
+			Debug.Log ("the chain is : " + matchesGemstone.Count);
 			newGemstone = AddUpgradedGemstone (rowNum, c.columIndex, matchesGemstone.Count , priorSpawnInfo[0]);  
 			priorSpawnInfo.RemoveAt (0);
+			Debug.Log ("remove complete "+ priorSpawnInfo.Count);
 		}else{
 			newGemstone = AddRegularGemstone (rowNum, c.columIndex);  
 		}
