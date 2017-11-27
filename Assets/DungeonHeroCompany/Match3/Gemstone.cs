@@ -129,6 +129,8 @@ public class Gemstone : MonoBehaviour {
 		Destroy (this.gameObject);  
 		Destroy (gemstoneBg.gameObject);  
 		Match3Controller = null;  
+
+		ParticleToHeroEffects.instance.SpawnParticles (gameObject.transform);
 	}  
 
 	public void OnMouseOver(){
