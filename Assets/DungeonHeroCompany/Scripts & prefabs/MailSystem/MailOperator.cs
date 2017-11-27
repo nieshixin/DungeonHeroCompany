@@ -35,7 +35,9 @@ public class MailOperator : MonoBehaviour {//singleton
 		//instantiate mail, with no data
 		GameObject go =  Instantiate(mailPrefab, parentToSpawn.transform) as GameObject;
 		//add data
-		go.GetComponent<MailData> ().heroData = data;
+		if (data != null) {
+			go.GetComponent<MailData> ().heroData = data;
+		}
 		/*
 		//update position
 		if (transform.childCount == 0) {

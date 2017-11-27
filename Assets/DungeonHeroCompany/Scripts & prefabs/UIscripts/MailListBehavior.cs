@@ -6,8 +6,11 @@ public class MailListBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	Animator anim;
+	public static MailListBehavior instance;
 
 	void Start () {
+		instance = this;
+
 		anim = GetComponent<Animator> (); 
 	}
 	

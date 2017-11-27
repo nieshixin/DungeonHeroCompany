@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 95253610222047296}
   - component: {fileID: 114800990605727260}
   - component: {fileID: 114581966154684192}
+  - component: {fileID: 114825373005832264}
   m_Layer: 5
   m_Name: MailPrefab
   m_TagString: Untagged
@@ -160,6 +161,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 0}
+--- !u!114 &114825373005832264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508779613075612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfb1a9567c6911408309155f78eb62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114895111174984540
 MonoBehaviour:
   m_ObjectHideFlags: 1

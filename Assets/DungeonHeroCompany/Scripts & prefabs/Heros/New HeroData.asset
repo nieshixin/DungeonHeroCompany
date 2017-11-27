@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: New HeroData
   m_EditorClassIdentifier: 
   _name: Doge
-  _health: 122
+  _health: 120.86
   _icon: {fileID: 21300000, guid: d13012f4abce7b241900001bf716f66e, type: 3}

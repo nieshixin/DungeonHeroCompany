@@ -159,13 +159,13 @@ public class Match3Controller : MonoBehaviour {
 	void RemoveMatches(){//NOTE: HERE can get how many chain the match gets
 		//how many match we get?
 		//Debug.Log("Match NUM: " + matchesGemstone.Count);
-
+		Gemstone sample = matchesGemstone [0] as Gemstone;
+		GemstoneType t = sample.gemstoneType;
 		/////
 		//Modify container!!
 		if (matchesGemstone.Count >= 4) {
 			Debug.Log ("REMOVE MATCHES  " + matchesGemstone.Count);
-			Gemstone sample = matchesGemstone [0] as Gemstone;
-			GemstoneType t = sample.gemstoneType;
+
 			//Debug.Log (t.ToString());
 			priorSpawnInfo.Add (t);
 			//Debug.Log ("in the list:" + priorSpawnInfo [0].ToString ());
