@@ -16,7 +16,7 @@ public class SendToSheet : MonoBehaviour { //attach this on each mail
 		
 	}
 
-	public void SendDataToSheet(){
+	public void SendDataToSheet(){ //called when the mail was clicked!
 		//hide the mail panel
 		MailListBehavior.instance.HideMailList();
 

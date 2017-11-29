@@ -4,18 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Slot
-  - Slots
   - Panel
   - Canvas
-  - MainInventory
-  - Tooltip
-  - DraggingItem
   - Timer
-  - Item
-  - ItemIcon
-  - HeroInventory
   - MailList
+  - InvisibleWall
   layers:
   - Default
   - TransparentFX

@@ -22,7 +22,7 @@ public class MailOperator : MonoBehaviour {//singleton
 	[SerializeField]
 	private GameObject parentToSpawn;
 	void Start () {
-		parentToSpawn = GameObject.FindGameObjectWithTag ("MailList");
+		parentToSpawn = this.gameObject;
 
 	}
 	

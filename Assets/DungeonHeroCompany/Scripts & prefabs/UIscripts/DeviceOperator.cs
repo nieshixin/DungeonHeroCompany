@@ -2,33 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SheetOperator : MonoBehaviour {
-	
-	private static SheetOperator theInstance;
+public class DeviceOperator : MonoBehaviour {
 	[HideInInspector]
-	public static SheetOperator instance {
-		get {
-			if (!theInstance) {
-				var inst = FindObjectOfType<SheetOperator> ();
-				theInstance = inst ? inst : new GameObject ().AddComponent<SheetOperator> ();
-			}
-			return theInstance;
-		}
-	}
+	public static DeviceOperator instance;
+	// Use this for initialization
 
 	public GameObject originalPos;
 	public GameObject destinationPos;
-	// Use this for initialization
+
 	void Start () {
-		
+		instance = this;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
-	public void SlideDown(){
+	public void ShowDevice(){
 		iTween.MoveTo (gameObject, iTween.Hash (
 			"position", destinationPos.transform.position,
 			"time", 0.3f,
@@ -36,7 +26,7 @@ public class SheetOperator : MonoBehaviour {
 		));
 	}
 
-	public void SlideUp(){
+	public void CloseDevice(){
 		iTween.MoveTo (gameObject, iTween.Hash (
 			"position", originalPos.transform.position,
 			"time", 0.3f,
