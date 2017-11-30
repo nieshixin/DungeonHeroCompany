@@ -82,12 +82,21 @@ public class Match3Controller : MonoBehaviour {
 		//iTween.MoveTo (c.gameObject, iTween.Hash ());
 		//Debug.Log ("x: " + c.rowIndex + ", y: " + c.columIndex);
 		//Destroy (c.gameObject);  
-		if (currentGemstone == null) {  
+
+
+
+
+		if (currentGemstone == null) {  //select
 			currentGemstone = c;  
 			currentGemstone.isSelected=true;  
+
+			HighLightMoveRelatedGems (c);
+
 			return;  
 		}
-		else {  
+		else {  //confirm
+
+
 			if(Mathf.Abs(currentGemstone.rowIndex-c.rowIndex) == 0 || Mathf.Abs(currentGemstone.columIndex-c.columIndex) == 0){  //check neighbour tiles
 				//ExangeAndMatches(currentGemstone,c);  
 				StartCoroutine(ExangeAndMatches(currentGemstone,c));  
@@ -98,6 +107,28 @@ public class Match3Controller : MonoBehaviour {
 			currentGemstone=null;  
 		}
 
+	}
+
+	public void HighLightMoveRelatedGems(Gemstone thegem){
+		for (int i = 0; i < rowNum; i++) {// get all gemstone on the COLUMN
+			Gemstone g = GetGemstone(i,thegem.columIndex) as Gemstone;
+				g.isRelated = true;
+		}
+		for (int i = 0; i < columNum; i++) {// get all gemstone on the COLUMN
+			Gemstone g = GetGemstone(thegem.rowIndex,i) as Gemstone;
+			g.isRelated = true;
+		}
+	}
+
+	public void DeHighLightMoveRelatedGems(Gemstone thegem){
+		for (int i = 0; i < rowNum; i++) {// get all gemstone on the COLUMN
+			Gemstone g = GetGemstone(i,thegem.columIndex) as Gemstone;
+			g.isRelated = false;
+		}
+		for (int i = 0; i < columNum; i++) {// get all gemstone on the COLUMN
+			Gemstone g = GetGemstone(thegem.rowIndex,i) as Gemstone;
+			g.isRelated = false;
+		}
 	}
 
 	IEnumerator ExangeAndMatches(Gemstone c1,Gemstone c2){//确定位置正确，开始check是否种type匹配

@@ -35,6 +35,16 @@ public class Gemstone : MonoBehaviour {
 			}  
 		}  
 	}  
+
+	public bool isRelated{  
+		set{  
+			if(value){  
+				spriteRenderer.color=Color.green;  
+			}else{  
+				spriteRenderer.color=Color.white;  
+			}  
+		}  
+	}  
 	// Use this for initialization  
 	void Start () { 
 		
